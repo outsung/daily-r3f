@@ -13,30 +13,30 @@ const HandTracking = () => {
     useStore.setState({ handPositions: props.multiHandLandmarks[0] });
   };
 
-  useEffect(() => {
-    const hands = new Hands({
-      locateFile: (file: string) => {
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@${VERSION}/${file}`;
-      },
-    });
-    hands.setOptions({
-      maxNumHands: 2,
-      modelComplexity: 1,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5,
-    });
-    hands.onResults(onResults);
+  // useEffect(() => {
+  //   const hands = new Hands({
+  //     locateFile: (file: string) => {
+  //       return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@${VERSION}/${file}`;
+  //     },
+  //   });
+  //   hands.setOptions({
+  //     maxNumHands: 2,
+  //     modelComplexity: 1,
+  //     minDetectionConfidence: 0.5,
+  //     minTrackingConfidence: 0.5,
+  //   });
+  //   hands.onResults(onResults);
 
-    const camera = new Camera(ref.current, {
-      onFrame: async () => {
-        console.log("frame");
-        await hands.send({ image: ref.current });
-      },
-      width: 1280,
-      height: 720,
-    });
-    camera.start();
-  }, []);
+  //   const camera = new Camera(ref.current, {
+  //     onFrame: async () => {
+  //       console.log("frame");
+  //       await hands.send({ image: ref.current });
+  //     },
+  //     width: 1280,
+  //     height: 720,
+  //   });
+  //   camera.start();
+  // }, []);
 
   return (
     <>

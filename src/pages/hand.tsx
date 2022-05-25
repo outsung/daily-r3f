@@ -1,24 +1,17 @@
-import HandTracking from "@/components/dom/HandTracking";
-import dynamic from "next/dynamic";
-
-const Hand = dynamic(() => import("@/components/canvas/hand"), {
-  ssr: false,
-});
+// const Hand = dynamic(() => import("@/components/canvas/hand"), {
+//   ssr: false,
+// });
 
 const DOM = () => {
   return (
     <>
-      <HandTracking />
+      <h1>준비중</h1>
     </>
   );
 };
 
 const R3F = () => {
-  return (
-    <>
-      <Hand />
-    </>
-  );
+  return <>{/* <Hand /> */}</>;
 };
 
 const Page = () => {
