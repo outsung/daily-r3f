@@ -1,17 +1,27 @@
-// const Hand = dynamic(() => import("@/components/canvas/hand"), {
-//   ssr: false,
-// });
+import HandTracking from "@/components/dom/HandTracking";
+import dynamic from "next/dynamic";
+import { Vector3 } from "three";
+
+const Hands = dynamic(() => import("@/components/canvas/hand"), {
+  ssr: false,
+});
 
 const DOM = () => {
   return (
     <>
-      <h1>준비중</h1>
+      <HandTracking />
     </>
   );
 };
 
 const R3F = () => {
-  return <>{/* <Hand /> */}</>;
+  return (
+    <>
+      <group position={new Vector3(-3, 3, 0)}>
+        <Hands />
+      </group>
+    </>
+  );
 };
 
 const Page = () => {

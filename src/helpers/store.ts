@@ -2,7 +2,7 @@ import create from "zustand";
 
 const useStore = create(() => {
   return {
-    handPositions: null,
+    handPositions: { l: null, r: null },
     router: null,
     dom: null,
   };
