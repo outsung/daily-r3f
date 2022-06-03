@@ -17,8 +17,15 @@ export interface NameCardEntity {
   mobile: string; // 휴대전화
 }
 
+declare const window: any;
+
 // { nameCard }: { nameCard: NameCardEntity }
 export default function NameCard() {
+  // window or global
+  if (window.ReactNativeWebView) {
+    alert("웹뷰");
+  }
+
   const font = useLoader(
     FontLoader,
     "/fonts/SpoqaHanSans-Regular_Regular.json"
