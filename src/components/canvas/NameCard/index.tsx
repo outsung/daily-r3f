@@ -63,12 +63,12 @@ function useListenerApp<A extends keyof AppEventActions>(
 
     alert("웹뷰입니다. 이벤트 추가" + String(!!window.ReactNativeWebView));
     // window or global
-    if (window.ReactNativeWebView) {
-      /** android */
-      document.addEventListener("message", listener);
-      /** ios */
-      window.addEventListener("message", listener);
-    }
+    // if (window.ReactNativeWebView) {
+    /** android */
+    document.addEventListener("message", listener);
+    /** ios */
+    window.addEventListener("message", listener);
+    // }
 
     return () => {
       /** android */
