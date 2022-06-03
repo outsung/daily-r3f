@@ -61,10 +61,9 @@ function useListenerApp<A extends keyof AppEventActions>(
       if (actionName === action) func(data);
     };
 
+    alert("웹뷰입니다. 이벤트 추가" + String(!!window.ReactNativeWebView));
     // window or global
     if (window.ReactNativeWebView) {
-      alert("웹뷰입니다. 이벤트 추가");
-
       /** android */
       document.addEventListener("message", listener);
       /** ios */
@@ -86,19 +85,6 @@ function useNameCardInfo() {
   useListenerApp("SET_NAME_CARD_ACTION", (data) => {
     setNameCard(data);
   });
-
-  // const nameCard:  = ;
-  // {
-  //   name: "김성우",
-  //   duty: "대표",
-  //   department: "영업부",
-  //   company: "에스에스테크",
-  //   addr: "서울시 강남구 역삼동",
-  //   tel: "02-1234-5678",
-  //   email: "adas",
-  //   fax: "02-1234-5678",
-  //   mobile: "010-1234-5678",
-  // }
 
   const text = useMemo(
     () =>
