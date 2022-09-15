@@ -1,19 +1,37 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Preload } from "@react-three/drei";
+import { OrbitControls, OrbitControlsProps, Preload } from "@react-three/drei";
 import useStore from "@/helpers/store";
-import { useEffect, useRef } from "react";
+import {
+  ForwardRefExoticComponent,
+  MutableRefObject,
+  Ref,
+  RefAttributes,
+  useEffect,
+  useRef,
+} from "react";
+
+export let controlRef: MutableRefObject<
+  ForwardRefExoticComponent<
+    OrbitControlsProps & RefAttributes<typeof OrbitControls>
+  > &
+    OrbitControlsProps
+>;
 
 const LControl = () => {
   const dom = useStore((state) => state.dom);
-  const control = useRef(null);
+  controlRef = useRef<typeof OrbitControls & OrbitControlsProps>(
+    null
+  ) as unknown as typeof controlRef;
 
   useEffect(() => {
-    if (control) {
+    if (controlRef) {
       dom.current.style["touch-action"] = "none";
+      // console.log({ control: control.current });
     }
-  }, [dom, control]);
+  }, [dom, controlRef]);
+
   // @ts-ignore
-  return <OrbitControls ref={control} domElement={dom.current} />;
+  return <OrbitControls ref={controlRef} domElement={dom.current} />;
 };
 const LCanvas = ({ children }) => {
   const dom = useStore((state) => state.dom);

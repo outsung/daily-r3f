@@ -1,11 +1,11 @@
-import * as THREE from 'three'
-import { useFrame, extend } from '@react-three/fiber'
-import { useRef, useState } from 'react'
-import useStore from '@/helpers/store'
-import { shaderMaterial } from '@react-three/drei'
+import * as THREE from "three";
+import { useFrame, extend } from "@react-three/fiber";
+import { useRef, useState } from "react";
+import useStore from "@/helpers/store";
+import { shaderMaterial } from "@react-three/drei";
 
-import vertex from './glsl/shader.vert'
-import fragment from './glsl/shader.frag'
+import vertex from "./glsl/shader.vert";
+import fragment from "./glsl/shader.frag";
 
 const ColorShiftMaterial = shaderMaterial(
   {
@@ -14,36 +14,36 @@ const ColorShiftMaterial = shaderMaterial(
   },
   vertex,
   fragment
-)
+);
 
 // This is the 🔑 that HMR will renew if this file is edited
 // It works for THREE.ShaderMaterial as well as for drei/shaderMaterial
 // @ts-ignore
-ColorShiftMaterial.key = THREE.MathUtils.generateUUID()
+ColorShiftMaterial.key = THREE.MathUtils.generateUUID();
 
-extend({ ColorShiftMaterial })
+extend({ ColorShiftMaterial });
 
 const Shader = (props) => {
-  const meshRef = useRef(null)
-  const [hovered, setHover] = useState(false)
-  const router = useStore((state) => state.router)
+  const meshRef = useRef(null);
+  const [hovered, setHover] = useState(false);
+  const router = useStore((state) => state.router);
 
   useFrame((state, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.x = meshRef.current.rotation.y += 0.01
+      meshRef.current.rotation.x = meshRef.current.rotation.y += 0.01;
     }
     if (meshRef.current.material) {
       meshRef.current.material.uniforms.time.value +=
-        Math.sin(delta / 2) * Math.cos(delta / 2)
+        Math.sin(delta / 2) * Math.cos(delta / 2);
     }
-  })
+  });
 
   return (
     <mesh
       ref={meshRef}
       scale={hovered ? 1.1 : 1}
       onClick={() => {
-        router.push(`/box`)
+        window.open("https://github.com/outsung", "_blank");
       }}
       onPointerOver={(e) => setHover(true)}
       onPointerOut={(e) => setHover(false)}
@@ -53,7 +53,7 @@ const Shader = (props) => {
       {/* @ts-ignore */}
       <colorShiftMaterial key={ColorShiftMaterial.key} time={3} />
     </mesh>
-  )
-}
+  );
+};
 
-export default Shader
+export default Shader;

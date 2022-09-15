@@ -1,6 +1,7 @@
 import useCheckSupportedDevices from "@/helpers/checkSupportedDevices";
 import useStore from "@/helpers/store";
-import { useEffect, useRef, useState } from "react";
+import Head from "next/head";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { SetState } from "zustand";
 
 declare const window: any;
@@ -29,7 +30,7 @@ const HandTracking = () => {
     useStore.setState({ handPositions: { l, r } });
   };
 
-  useEffect(() => {
+  const handInit = () => {
     const hands = new window.Hands({
       locateFile: (file: string) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@${window.VERSION}/${file}`;
@@ -53,28 +54,69 @@ const HandTracking = () => {
       height: 720,
     });
     camera.start();
-  }, []);
+  };
+
+  const [handLoaded, setHandLoaded] = useState(false);
+
+  useEffect(() => {
+    const handCheck = () => {
+      console.log("check", window.Hands);
+      if (window.Hands) {
+        setHandLoaded(true);
+        handInit();
+      }
+    };
+
+    let close: NodeJS.Timeout;
+
+    if (!handLoaded) {
+      console.log("handLoaded : ", handLoaded);
+      close = setInterval(handCheck, 300);
+    }
+
+    return () => {
+      close && clearInterval(close);
+    };
+  }, [handLoaded]);
+
+  const isHandUndefined = useMemo(
+    () => handPositions.l === undefined && handPositions.r === undefined,
+    [handPositions]
+  );
 
   return (
     <>
-      <script
-        src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
-        crossOrigin="anonymous"
-      ></script>
-      <script
-        src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
-        crossOrigin="anonymous"
-      ></script>
-      <script
-        src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
-        crossOrigin="anonymous"
-      ></script>
-      <script
-        src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
-        crossOrigin="anonymous"
-      ></script>
-      <video style={{ width: "300px" }} ref={ref} />
-      {/* <div>{JSON.stringify(handPositions)}</div> */}
+      <Head>
+        <script
+          src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
+          crossOrigin="anonymous"
+        ></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+          crossOrigin="anonymous"
+        ></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+          crossOrigin="anonymous"
+        ></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
+          crossOrigin="anonymous"
+        ></script>
+      </Head>
+      <video className="hidden" ref={ref} />
+
+      {(!handLoaded || isHandUndefined) && (
+        <div
+          className="absolute max-w-lg px-4 py-2 text-sm shadow-xl pointer-events-none select-none md:text-base top-8 left-1/2 text-gray-50 transform -translate-x-1/2"
+          style={{
+            backgroundColor: "rgb(27, 30, 40)",
+            maxWidth: "calc(100% - 28px)",
+          }}
+        >
+          {handLoaded ? "카메라에게 손을 보여주세요." : "로딩중입니다."}
+        </div>
+      )}
     </>
   );
 };

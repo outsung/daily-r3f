@@ -1,10 +1,13 @@
 import useStore from "@/helpers/store";
+import { useControlDisable } from "@/hooks/useControlDisable";
 import Hand from "./hand.circle.model";
 
 /**
  * @summary Hand 카메라로 측정 이후 같이 움직이는 손 제작
  */
 const HandComponent = () => {
+  useControlDisable();
+
   const x = 5;
 
   const hand = useStore((s) => {
