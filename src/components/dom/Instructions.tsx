@@ -9,6 +9,9 @@ export default function Instructions() {
       <h3 className="text-3xl">index</h3>
       <ul>
         <li>
+          <Link href={"/wil"}>WIL</Link>
+        </li>
+        <li>
           <Link href={"/preview"}>preview</Link>
         </li>
         <li>

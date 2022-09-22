@@ -2,6 +2,7 @@ import fs from "fs/promises";
 
 export enum ReadableFolder {
   PREVIEWABLE_MODELS = "public/models/previewable",
+  WIL_PROJECT = "src/pages/wil",
 }
 export async function readFolder(path: ReadableFolder) {
   const dir = await fs.opendir(path);
