@@ -5,17 +5,23 @@ import { ReadableFolder, readFolder } from "@/helpers/fs/readFolder";
 import { GetStaticProps } from "next";
 import { DOM as WILIndex } from ".";
 
-import { BoxWithTransformControlsRef } from "@/components/canvas/wil/20220919";
+import BoxWithTransformControls, {
+  BoxWithTransformControlsRef,
+} from "@/components/canvas/wil/20220919";
 
-let R3FRef: React.MutableRefObject<BoxWithTransformControlsRef>;
-const BoxWithTransformControls = dynamic(
-  () => import("@/components/canvas/wil/20220919"),
-  {
-    ssr: false,
-  }
-);
+// const BoxWithTransformControls = dynamic(
+//   () => import("@/components/canvas/wil/20220919"),
+//   {
+//     ssr: false,
+//   }
+// );
 
-const DOM = ({ paths }: PageProps) => {
+const DOM = ({
+  paths,
+  R3FRef,
+}: PageProps & {
+  R3FRef: React.MutableRefObject<BoxWithTransformControlsRef>;
+}) => {
   const [forLoadSceneInputValue, setForLoadSceneInputValue] = useState("");
 
   return (
@@ -59,24 +65,25 @@ const DOM = ({ paths }: PageProps) => {
   );
 };
 
-const R3F = () => {
-  R3FRef = useRef<BoxWithTransformControlsRef>();
-
+const R3F = forwardRef<BoxWithTransformControlsRef>((_, ref) => {
   return (
     <>
-      <BoxWithTransformControls ref={R3FRef} />
+      <BoxWithTransformControls ref={ref} />
     </>
   );
-};
+});
+
 interface PageProps {
   paths: string[];
 }
 const Page = ({ paths }: PageProps) => {
+  const R3FRef = useRef<BoxWithTransformControlsRef>(null);
+
   return (
     <>
-      <DOM paths={paths} />
+      <DOM paths={paths} R3FRef={R3FRef} />
       {/* @ts-ignore */}
-      <R3F r3f />
+      <R3F r3f ref={R3FRef} />
     </>
   );
 };

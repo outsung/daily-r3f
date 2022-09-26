@@ -38,6 +38,24 @@ const BoxWithTransformControls = forwardRef<BoxWithTransformControlsRef, {}>(
     const [selectedBoxIndex, setSelectedBoxIndex] = useState<number | null>(1);
     const transformRefs = useRef<TransformControlsProps[]>([]);
 
+    useEffect(() => {
+      transformRefs.current.map((transformRef, index) => {
+        if (!transformRef) return;
+
+        const onDraggingChanged = (event) => {
+          controlRef.current.enabled = !event.value;
+        };
+
+        transformRef.addEventListener("dragging-changed", onDraggingChanged);
+        return () => {
+          transformRef.removeEventListener(
+            "dragging-changed",
+            onDraggingChanged
+          );
+        };
+      });
+    });
+
     useImperativeHandle(
       ref,
       () => ({
@@ -65,23 +83,6 @@ const BoxWithTransformControls = forwardRef<BoxWithTransformControlsRef, {}>(
       []
     );
 
-    useEffect(() => {
-      transformRefs.current.map((transformRef, index) => {
-        if (!transformRef) return;
-
-        const onDraggingChanged = (event) => {
-          controlRef.current.enabled = !event.value;
-        };
-
-        transformRef.addEventListener("dragging-changed", onDraggingChanged);
-        return () => {
-          transformRef.removeEventListener(
-            "dragging-changed",
-            onDraggingChanged
-          );
-        };
-      });
-    });
     return (
       <>
         <Suspense fallback={null}>
