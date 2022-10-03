@@ -4,7 +4,7 @@ export default function Instructions() {
   return (
     <div>
       <div className="text-xs">안녕하세요.</div>
-      <div className="text-xs">오준서의 Three.js 프로젝트 입니다.</div>
+      <div className="text-xs">r3f 프로젝트 입니다.</div>
 
       <h3 className="text-3xl">index</h3>
       <ul>
@@ -16,6 +16,9 @@ export default function Instructions() {
         </li>
         <li>
           <Link href={"/hand"}>hand</Link>
+        </li>
+        <li>
+          <Link href={"/rhetoric"}>rhetoric</Link>
         </li>
       </ul>
 

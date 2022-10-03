@@ -1,4 +1,4 @@
-import useStore from "@/helpers/store";
+import useStore from "@/store/store";
 import { useControlDisable } from "@/hooks/useControlDisable";
 import Hand from "./hand.circle.model";
 

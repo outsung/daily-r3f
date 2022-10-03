@@ -1,5 +1,5 @@
 import useCheckSupportedDevices from "@/helpers/checkSupportedDevices";
-import useStore from "@/helpers/store";
+import useStore from "@/store/store";
 import Head from "next/head";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SetState } from "zustand";

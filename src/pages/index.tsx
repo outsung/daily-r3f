@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import Instructions from "@/components/dom/Instructions";
+import { useRef } from "react";
 
 const Box = dynamic(() => import("@/components/canvas/box/shader/Shader"), {
   ssr: false,
@@ -18,6 +19,7 @@ const R3F = () => {
 };
 
 const Page = () => {
+  const r3fRef = useRef(null);
   return (
     <>
       <DOM />
