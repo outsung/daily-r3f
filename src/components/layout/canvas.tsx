@@ -1,5 +1,10 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, OrbitControlsProps, Preload } from "@react-three/drei";
+import {
+  Box,
+  OrbitControls,
+  OrbitControlsProps,
+  Preload,
+} from "@react-three/drei";
 import useStore from "@/store/store";
 import {
   ForwardRefExoticComponent,
@@ -11,6 +16,7 @@ import {
 } from "react";
 import useRhetoricStore from "@/store/rhetoricStore";
 import { Vector3 } from "three";
+import { useMousePosition } from "@/hooks/rhetoric/useMousePosition";
 
 export let controlRef: MutableRefObject<
   ForwardRefExoticComponent<
@@ -21,8 +27,8 @@ export let controlRef: MutableRefObject<
 
 const LControl = () => {
   const dom = useStore((state) => state.dom);
-  const setUser = useRhetoricStore((state) => state.setUser);
   const myUserSend = useRhetoricStore((state) => state.myUserSend);
+  useMousePosition();
 
   controlRef = useRef<typeof OrbitControls & OrbitControlsProps>(
     null
@@ -39,15 +45,7 @@ const LControl = () => {
     <OrbitControls
       onChange={(e) => {
         const { position, rotation } = e.target.object;
-        myUserSend([position.x, position.y, position.z]);
-        // setUser()
-
-        // setUser("my-user", (user) => ({ ...user, position, rotation }));
-        // setUser("other-user", (user) => ({
-        //   ...user,
-        //   position: new Vector3(-position.x, -position.y, -position.z),
-        //   rotation: new Vector3(-rotation.x, -rotation.y, -rotation.z),
-        // }));
+        myUserSend && myUserSend([position.x, position.y, position.z]);
       }}
       makeDefault
       // @ts-ignore
@@ -70,6 +68,7 @@ const LCanvas = ({ children }) => {
     >
       <LControl />
       <Preload all />
+      <Box uuid="test" scale={0.1} />
       {children}
     </Canvas>
   );

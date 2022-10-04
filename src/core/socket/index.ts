@@ -2,8 +2,8 @@ import io, { Socket as SocketType } from "socket.io-client";
 import * as uuid from "uuid";
 
 // https://tie-video-chat-app.herokuapp.com
-// const url = "https://tie-video-chat-app.herokuapp.com";
-const url = "http://localhost:5556";
+const url = "https://tie-video-chat-app.herokuapp.com";
+// const url = "http://localhost:5556";
 
 // web token 만들기
 const token =
