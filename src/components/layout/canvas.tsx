@@ -62,13 +62,14 @@ const LCanvas = ({ children }) => {
       // mode='concurrent'
       style={{
         position: "absolute",
+        backgroundColor: "#F5E1D7",
         top: 0,
       }}
       onCreated={(state) => state.events.connect(dom.current)}
     >
       <LControl />
       <Preload all />
-      <Box uuid="test" scale={0.1} />
+      {/* <Box uuid="test" scale={0.1} /> */}
       {children}
     </Canvas>
   );

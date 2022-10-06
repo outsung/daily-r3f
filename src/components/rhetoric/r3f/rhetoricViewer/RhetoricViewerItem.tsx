@@ -19,7 +19,9 @@ export function RhetoricViewerItem({ rhetoric }: { rhetoric: Rhetoric }) {
 
   return (
     <TransformContainer enabled={isSelected} rhetoric={rhetoric}>
-      <Box onClick={onClick} />
+      <Box onClick={onClick}>
+        <meshBasicMaterial color={"#72A8A5"} />
+      </Box>
     </TransformContainer>
   );
 }

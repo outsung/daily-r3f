@@ -39,10 +39,11 @@ export function useMousePosition() {
     // x, y, z
     // console.log(direction);
 
-    const test = camera.position.clone().addScaledVector(direction, 1);
-    scene.children
-      .find((c) => c.uuid === "test")
-      .position.set(test.x, test.y, test.z);
+    const handPosition = camera.position.clone().addScaledVector(direction, 1);
+    const test = scene.children.find((c) => c.uuid === "test");
+    if (test) {
+      test.position.set(handPosition.x, handPosition.y, handPosition.z);
+    }
 
     // rotationEuler.set(y, x, 0);
     // rotationQuaternion.setFromEuler(rotationEuler);

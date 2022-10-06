@@ -20,6 +20,7 @@ export function RhetoricSidebarLeft() {
       {
         key: "root",
         title: "root",
+        style: { backgroundColor: "#F5E1D7" },
         children: rhetorics.map<DataNode>((rhetoric) => ({
           key: rhetoric.id,
           title: rhetoric.name,
@@ -32,6 +33,7 @@ export function RhetoricSidebarLeft() {
   return (
     <RhetoricSidebar position="left">
       <Tree
+        style={{ backgroundColor: "#F5E1D7" }}
         onSelect={(_, info) =>
           setSelectedRhetoricIds([info.node.key as rhetoricId])
         }
