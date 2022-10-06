@@ -1,4 +1,5 @@
 import { forwardRef, Suspense } from "react";
+import { BlendFunction } from "postprocessing";
 import {
   EffectComposer,
   Outline,
@@ -30,6 +31,8 @@ const RhetoricR3f = forwardRef<RhetoricR3fRef, RhetoricR3fProps>(
                 color="black"
               />
               <Outline
+                // https://github.com/pmndrs/react-postprocessing/issues/142
+                blendFunction={BlendFunction.ALPHA}
                 visibleEdgeColor={0xffffff}
                 hiddenEdgeColor={0xffffff}
                 blur
