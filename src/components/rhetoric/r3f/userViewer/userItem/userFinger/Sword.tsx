@@ -13,7 +13,7 @@ export default function Sword(props) {
   );
   return (
     <group ref={group} {...props} dispose={null}>
-      <group rotation={[Math.PI / 2, 0, 0]}>
+      <group scale={0.5} rotation={[Math.PI / 2, 0, 0]}>
         <mesh
           geometry={nodes.Cube4214.geometry}
           material={materials["Metal.102"]}

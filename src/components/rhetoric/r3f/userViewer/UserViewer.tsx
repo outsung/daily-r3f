@@ -1,4 +1,5 @@
 import { useMyUserHandMove, useMyUserMove } from "@/hooks/rhetoric";
+import { useMyUser } from "@/hooks/store/user";
 import { useUserStore } from "@/store/rhetoric";
 import { UserItem } from "./userItem";
 
@@ -6,13 +7,16 @@ export function UserViewer() {
   useMyUserMove();
   useMyUserHandMove();
 
+  const myUser = useMyUser();
   const userList = useUserStore((state) => state.userList);
 
   return (
     <>
-      {userList.map((user) => (
-        <UserItem key={user.id} user={user} />
-      ))}
+      {userList
+        .filter((user) => user.id !== myUser.id)
+        .map((user) => (
+          <UserItem key={user.id} user={user} />
+        ))}
     </>
   );
 }

@@ -5,7 +5,7 @@ interface UserCameraShapeProps {
 }
 export function UserCameraShape({ color }: UserCameraShapeProps) {
   return (
-    <Sphere>
+    <Sphere args={[0.5]}>
       <meshBasicMaterial color={color} />
     </Sphere>
   );

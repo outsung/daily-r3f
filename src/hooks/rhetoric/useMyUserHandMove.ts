@@ -25,7 +25,9 @@ export function useMyUserHandMove() {
       .sub(origin)
       .normalize();
 
-    const handPosition = camera.position.clone().addScaledVector(direction, 1);
+    const handPosition = camera.position
+      .clone()
+      .addScaledVector(direction, 0.8);
 
     handMoveById({ handPosition, userId: myUser.id });
 
