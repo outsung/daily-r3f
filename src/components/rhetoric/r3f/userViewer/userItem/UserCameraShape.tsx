@@ -1,4 +1,3 @@
-import { User } from "@/store/rhetoricStore";
 import { Sphere } from "@react-three/drei";
 
 interface UserCameraShapeProps {

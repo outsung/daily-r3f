@@ -1,36 +1,30 @@
 import Socket from "@/core/socket";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import useSocketEventOn from "../socket/useSocketEventOn";
+import { useOnMessage } from "./useOnMessage";
+import { useSetSendWebRTC } from "./useSetSendWebRTC";
 
 const RTC_PEER_CONNECTION_CONFIG = {
   iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
 };
 
-interface RhetoricUser {
-  socketId: string;
-  email: string;
-  receiveChannel: RTCDataChannel;
-  position: [number, number, number];
-}
-
 export function useWebRtc(email = "테스트") {
-  const [users, setUsers] = useState<RhetoricUser[]>([]);
   const peerRefs = useRef<{ [socketId: string]: RTCPeerConnection }>({});
   const sendChannelRefs = useRef<{ [socketId: string]: RTCDataChannel }>({});
 
-  const send = (position: [number, number, number]) => {
-    users.forEach((user) => {
-      if (sendChannelRefs.current[user.socketId]) {
-        console.log(
-          "send",
-          user,
-          position,
-          sendChannelRefs.current[user.socketId]
-        );
-        sendChannelRefs.current[user.socketId].send(JSON.stringify(position));
-      }
-    });
-  };
+  useSetSendWebRTC({
+    send: (data) => {
+      const socketIds = Object.keys(sendChannelRefs.current);
+
+      socketIds.forEach((socketId) => {
+        if (sendChannelRefs.current[socketId]) {
+          sendChannelRefs.current[socketId].send(data);
+        }
+      });
+    },
+  });
+
+  const onMessage = useOnMessage();
 
   const createPeerConnection = useCallback(
     (socketID: string, email: string) => {
@@ -57,28 +51,25 @@ export function useWebRtc(email = "테스트") {
 
         pc.ondatachannel = (event) => {
           // @ts-ignore
-          event.channel.onmessage = (e: any) => {
-            console.log("onmessage !!!!!!!!!!!!! ");
-            setUsers((prev) =>
-              prev.map((p) =>
-                p.socketId === socketID
-                  ? { ...p, position: JSON.parse(e.data) }
-                  : p
-              )
-            );
-          };
+          event.channel.onmessage = (e: any) => onMessage(e.data);
+          // (e: any) => {
+          //   console.log("onmessage !!!!!!!!!!!!! ");
+          //   setUsers((prev) =>
+          //     prev.map((p) =>
+          //       p.socketId === socketID
+          //         ? { ...p, position: JSON.parse(e.data) }
+          //         : p
+          //     )
+          //   );
+          // };
 
           console.log("ondatachannel, event :", event);
 
-          setUsers((prev) =>
-            prev
-              .filter((user) => user.socketId !== socketID)
-              .concat({
-                socketId: socketID,
-                email,
-                receiveChannel: event.channel,
-                position: [0, 0, 0],
-              })
+          onMessage(
+            JSON.stringify({
+              eventName: "userEnter",
+              payload: { name: email, userId: socketID },
+            })
           );
         };
 
@@ -95,14 +86,19 @@ export function useWebRtc(email = "테스트") {
     return () => {
       Socket.instance?.disconnect();
 
-      users.forEach((user) => {
-        if (sendChannelRefs.current[user.socketId]) {
-          sendChannelRefs.current[user.socketId].close();
-          delete sendChannelRefs.current[user.socketId];
+      const socketIdsForRTCDataChannel = Object.keys(sendChannelRefs.current);
+      socketIdsForRTCDataChannel.forEach((socketId) => {
+        if (sendChannelRefs.current[socketId]) {
+          sendChannelRefs.current[socketId].close();
+          delete sendChannelRefs.current[socketId];
         }
-        if (peerRefs.current[user.socketId]) {
-          peerRefs.current[user.socketId].close();
-          delete peerRefs.current[user.socketId];
+      });
+
+      const socketIdsForRTCPeerConnection = Object.keys(peerRefs.current);
+      socketIdsForRTCPeerConnection.forEach((socketId) => {
+        if (peerRefs.current[socketId]) {
+          peerRefs.current[socketId].close();
+          delete peerRefs.current[socketId];
         }
       });
     };
@@ -214,10 +210,12 @@ export function useWebRtc(email = "테스트") {
       peerRefs.current[data.id].close();
       delete peerRefs.current[data.id];
     }
-    setUsers((oldUsers) =>
-      oldUsers.filter((user) => user.socketId !== data.id)
+
+    onMessage(
+      JSON.stringify({
+        eventName: "userLeave",
+        payload: { userId: data.id, name: "unknown" },
+      })
     );
   });
-
-  return { send, users };
 }

@@ -1,5 +1,4 @@
 import io, { Socket as SocketType } from "socket.io-client";
-import * as uuid from "uuid";
 
 // https://tie-video-chat-app.herokuapp.com
 const url = "https://tie-video-chat-app.herokuapp.com";

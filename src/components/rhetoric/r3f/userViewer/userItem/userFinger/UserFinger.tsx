@@ -1,13 +1,19 @@
-import Spatula from "./spatula";
+import { Vector3 } from "three";
 import Sword from "./Sword";
 
-export type userFingerType = "Spatula" | "Sword";
-export function UserFinger({ type }: { type: userFingerType }) {
-  const FingerComponent = { Spatula, Sword }[type];
+export type userFingerType = "Sword";
+export function UserFinger({
+  type,
+  position,
+}: {
+  type: userFingerType;
+  position: Vector3;
+}) {
+  const FingerComponent = { Sword }[type];
 
   return (
     <>
-      <FingerComponent />
+      <FingerComponent position={position} />
     </>
   );
 }

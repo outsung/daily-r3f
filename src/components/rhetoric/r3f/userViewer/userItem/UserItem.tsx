@@ -1,21 +1,20 @@
-import { UserFinger } from "./userFinger";
 import { UserCameraShape } from "./UserCameraShape";
-import { User } from "@/store/rhetoricStore";
-import { useEffect, useRef } from "react";
-import { GroupProps } from "@react-three/fiber";
-import { Vector3 } from "three";
+import { User } from "@/types/user";
+import { stringToColor } from "@/helpers/stringToColor";
+import { UserFinger } from "./userFinger";
 
 interface UserItemProps {
   user: User;
 }
 export function UserItem({ user }: UserItemProps) {
+  const color = stringToColor(user.id);
+
   return (
-    <group
-      key={user.id}
-      position={new Vector3(user.position.x, user.position.y, user.position.z)}
-    >
-      <UserCameraShape color={user.color} />
-      <UserFinger type={user.finger} />
-    </group>
+    <>
+      <group key={user.id} position={user.position}>
+        <UserCameraShape color={color} />
+      </group>
+      <UserFinger type={"Sword"} position={user.handPosition} />
+    </>
   );
 }

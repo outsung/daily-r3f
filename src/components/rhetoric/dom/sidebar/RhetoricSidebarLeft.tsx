@@ -1,19 +1,17 @@
 import { Tree } from "antd";
-import useRhetoricStore from "@/store/rhetoricStore";
-
 import { RhetoricSidebar } from "./RhetoricSidebar";
 import { useMemo } from "react";
 import { DataNode } from "antd/lib/tree";
-import { rhetoricId, rhetoricType } from "@/core/rhetoric/Rhetoric";
+import { useR3fObjectStore } from "@/store/rhetoric";
+import { useMyUser } from "@/hooks/store/user";
+import { useWebRTCStore } from "@/store/webRTC";
+import { R3fObjectId } from "@/types/r3fObject";
 
 export function RhetoricSidebarLeft() {
-  const rhetorics = useRhetoricStore((state) => state.tree);
-  const setSelectedRhetoricIds = useRhetoricStore(
-    (state) => state.setSelectedRhetoricIds
-  );
-  const selectedRhetoricIds = useRhetoricStore(
-    (state) => state.selectedRhetoricIds
-  );
+  const r3fObjectList = useR3fObjectStore((state) => state.r3fObjectList);
+  const myUser = useMyUser();
+
+  const send = useWebRTCStore((state) => state.send);
 
   const treeData = useMemo<DataNode[]>(() => {
     return [
@@ -21,45 +19,34 @@ export function RhetoricSidebarLeft() {
         key: "root",
         title: "root",
         style: { backgroundColor: "#F5E1D7" },
-        children: rhetorics.map<DataNode>((rhetoric) => ({
-          key: rhetoric.id,
-          title: rhetoric.name,
-          isLeaf: rhetoric.type === rhetoricType.object,
+        children: r3fObjectList.map<DataNode>((r3fObject) => ({
+          key: r3fObject.id,
+          title: r3fObject.name,
+          isLeaf: true,
         })),
       },
     ];
-  }, [rhetorics]);
+  }, [r3fObjectList]);
 
   return (
     <RhetoricSidebar position="left">
       <Tree
         style={{ backgroundColor: "#F5E1D7" }}
         onSelect={(_, info) =>
-          setSelectedRhetoricIds([info.node.key as rhetoricId])
+          send({
+            eventName: "userR3fObjectFocus",
+            payload: {
+              userId: myUser.id,
+              r3fObjectId: info.node.key as R3fObjectId,
+            },
+          })
         }
         showLine
         multiple
         defaultExpandAll
         treeData={treeData}
-        selectedKeys={selectedRhetoricIds}
+        selectedKeys={myUser.focusedR3fObjectIds}
       />
     </RhetoricSidebar>
   );
 }
-
-// import type { DataNode, DirectoryTreeProps } from 'antd/es/tree';
-// import React from 'react';
-
-// const App: React.FC = () => {
-//   const onSelect: DirectoryTreeProps['onSelect'] = (keys, info) => {
-//     console.log('Trigger Select', keys, info);
-//   };
-
-//   const onExpand: DirectoryTreeProps['onExpand'] = (keys, info) => {
-//     console.log('Trigger Expand', keys, info);
-//   };
-
-//   return (
-
-//   );
-// };

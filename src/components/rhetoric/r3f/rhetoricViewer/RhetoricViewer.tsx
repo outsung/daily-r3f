@@ -1,20 +1,18 @@
-import useRhetoricStore from "@/store/rhetoricStore";
 import { RhetoricViewerItem } from "./RhetoricViewerItem";
-import { TransformContainer } from "../transformContainer";
-import { TransformControls } from "@react-three/drei";
 import { useMemo } from "react";
+import { useR3fObjectStore } from "@/store/rhetoric";
 
 export function RhetoricViewer() {
-  const tree = useRhetoricStore((state) => state.tree);
+  const r3fObjectList = useR3fObjectStore((state) => state.r3fObjectList);
 
   return (
     <>
       {useMemo(
         () =>
-          tree.map((rhetoric) => (
-            <RhetoricViewerItem key={rhetoric.id} rhetoric={rhetoric} />
+          r3fObjectList.map((r3fObject) => (
+            <RhetoricViewerItem key={r3fObject.id} r3fObject={r3fObject} />
           )),
-        [tree.length]
+        [r3fObjectList.length]
       )}
     </>
   );

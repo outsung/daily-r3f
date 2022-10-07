@@ -1,32 +1,31 @@
-import { controlRef } from "@/components/layout/canvas";
-import { Rhetoric } from "@/core/rhetoric/Rhetoric";
-import useRhetoricStore from "@/store/rhetoricStore";
-import { TransformControls, TransformControlsProps } from "@react-three/drei";
+import { useR3fObjectStore } from "@/store/rhetoric";
+import { R3fObject } from "@/types/r3fObject";
+import { TransformControls } from "@react-three/drei";
 import { Select } from "@react-three/postprocessing";
-import { ReactElement, useEffect, useRef } from "react";
+import { ReactElement } from "react";
 import { Object3D, Vector3 } from "three";
 
 interface TransformContainerProps {
   enabled: boolean;
   children: ReactElement<Object3D<Event>, string>;
-  rhetoric: Rhetoric;
+  r3fObject: R3fObject;
 }
 export function TransformContainer({
   children,
   enabled,
-  rhetoric,
+  r3fObject,
 }: TransformContainerProps) {
-  const setTree = useRhetoricStore((state) => state.setTree);
+  const moveById = useR3fObjectStore((state) => state.moveById);
 
   return (
     <TransformControls
       mode="translate"
-      key={rhetoric.id}
+      key={r3fObject.id}
       showZ={enabled}
       showX={enabled}
       showY={enabled}
       enabled={enabled}
-      position={rhetoric.position}
+      position={r3fObject.position}
       onObjectChange={(e) => {
         const newPosition = new Vector3(
           e.target.positionStart.x + e.target.offset.x,
@@ -34,11 +33,7 @@ export function TransformContainer({
           e.target.positionStart.z + e.target.offset.z
         );
 
-        setTree((tree) =>
-          tree.map((t) =>
-            t.id === rhetoric.id ? { ...t, position: newPosition } : t
-          )
-        );
+        moveById({ position: newPosition, r3fObjectId: r3fObject.id });
       }}
     >
       <Select enabled={enabled}>{children}</Select>

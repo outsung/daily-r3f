@@ -11,6 +11,8 @@ import {
 import { DefaultGizmoHelper } from "./gizmoHelper";
 import { RhetoricViewer } from "./rhetoricViewer";
 import { UserViewer } from "./userViewer";
+import Socket from "@/core/socket";
+import { stringToHex } from "@/helpers/stringToHex";
 
 interface RhetoricR3fProps {}
 export interface RhetoricR3fRef {}
@@ -30,14 +32,18 @@ const RhetoricR3f = forwardRef<RhetoricR3fRef, RhetoricR3fProps>(
                 luminanceInfluence={0.5}
                 color="black"
               />
-              <Outline
-                // https://github.com/pmndrs/react-postprocessing/issues/142
-                blendFunction={BlendFunction.ALPHA}
-                visibleEdgeColor={0xffffff}
-                hiddenEdgeColor={0xffffff}
-                blur
-                edgeStrength={100}
-              />
+
+              {Socket.instance?.id && (
+                <Outline
+                  // https://github.com/pmndrs/react-postprocessing/issues/142
+                  blendFunction={BlendFunction.ADD}
+                  visibleEdgeColor={stringToHex(Socket.instance.id)}
+                  hiddenEdgeColor={stringToHex(Socket.instance.id)}
+                  blur
+                  edgeStrength={100}
+                />
+              )}
+
               {/* <SMAA /> */}
             </EffectComposer>
           </Selection>
