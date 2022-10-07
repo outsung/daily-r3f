@@ -50,6 +50,8 @@ const LCanvas = ({ children }) => {
       }}
       onCreated={(state) => state.events.connect(dom.current)}
     >
+      <ambientLight />
+
       <LControl />
       <Preload all />
 

@@ -1,20 +1,33 @@
-import { UserCameraShape } from "./UserCameraShape";
 import { User } from "@/types/user";
 import { stringToColor } from "@/helpers/stringToColor";
-import { UserFinger } from "./userFinger";
+import {
+  UserItemBody,
+  userItemBodyModels,
+  UserItemBodyModelType,
+} from "./userBody";
+import { UserItemHand } from "./userHand";
+import { UserCameraShape } from "./UserCameraShape";
 
 interface UserItemProps {
   user: User;
+  index: number;
 }
-export function UserItem({ user }: UserItemProps) {
+export function UserItem({ user, index }: UserItemProps) {
   const color = stringToColor(user.id);
 
   return (
     <>
       <group key={user.id} position={user.position}>
-        <UserCameraShape color={color} />
+        {/* <UserCameraShape color={color} /> */}
+        <UserItemBody
+          modelType={
+            Object.keys(userItemBodyModels)[
+              index % Object.keys(userItemBodyModels).length
+            ] as UserItemBodyModelType
+          }
+        />
       </group>
-      <UserFinger type={"Sword"} position={user.handPosition} />
+      <UserItemHand modelType="SwordModel" position={user.handPosition} />
     </>
   );
 }

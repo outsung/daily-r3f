@@ -14,8 +14,8 @@ export function UserViewer() {
     <>
       {userList
         .filter((user) => user.id !== myUser.id)
-        .map((user) => (
-          <UserItem key={user.id} user={user} />
+        .map((user, index) => (
+          <UserItem index={index} key={user.id} user={user} />
         ))}
     </>
   );
