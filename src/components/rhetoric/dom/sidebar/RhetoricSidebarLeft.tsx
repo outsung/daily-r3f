@@ -4,14 +4,10 @@ import { useMemo } from "react";
 import { DataNode } from "antd/lib/tree";
 import { useR3fObjectStore } from "@/store/rhetoric";
 import { useMyUser } from "@/hooks/store/user";
-import { useWebRTCStore } from "@/store/webRTC";
-import { R3fObjectId } from "@/types/r3fObject";
 
 export function RhetoricSidebarLeft() {
   const r3fObjectList = useR3fObjectStore((state) => state.r3fObjectList);
   const myUser = useMyUser();
-
-  const send = useWebRTCStore((state) => state.send);
 
   const treeData = useMemo<DataNode[]>(() => {
     return [
@@ -32,15 +28,6 @@ export function RhetoricSidebarLeft() {
     <RhetoricSidebar position="left">
       <Tree
         style={{ backgroundColor: "#F5E1D7" }}
-        onSelect={(_, info) =>
-          send({
-            eventName: "userR3fObjectFocus",
-            payload: {
-              userId: myUser.id,
-              r3fObjectId: info.node.key as R3fObjectId,
-            },
-          })
-        }
         showLine
         multiple
         defaultExpandAll

@@ -12,12 +12,38 @@ export function useWebRtc() {
   const peerRefs = useRef<{ [socketId: string]: RTCPeerConnection }>({});
   const sendChannelRefs = useRef<{ [socketId: string]: RTCDataChannel }>({});
 
+  // const chunkSend = (dataChannel: RTCDataChannel, data: string) => {
+  //   const chunkSize = 65535;
+
+  //   while (!!new TextEncoder().encode(data).length) {
+  //     console.log({
+  //       byteLength: new TextEncoder().encode(data).length,
+  //       bufferedAmount: dataChannel.bufferedAmount,
+  //       bufferedAmountLowThreshold: dataChannel.bufferedAmountLowThreshold,
+  //     });
+
+  //     if (dataChannel.bufferedAmount > dataChannel.bufferedAmountLowThreshold) {
+  //       dataChannel.onbufferedamountlow = () => {
+  //         dataChannel.onbufferedamountlow = null;
+  //         chunkSend(dataChannel, data);
+  //       };
+  //       return;
+  //     }
+  //     const chunk = data.slice(0, chunkSize);
+  //     data = data.slice(chunkSize, new TextEncoder().encode(data).length);
+  //     dataChannel.send(chunk);
+  //   }
+  // };
+
   useSetSendWebRTC({
     send: (data) => {
       const socketIds = Object.keys(sendChannelRefs.current);
 
       socketIds.forEach((socketId) => {
-        if (sendChannelRefs.current[socketId]) {
+        if (
+          sendChannelRefs.current[socketId] &&
+          sendChannelRefs.current[socketId].readyState === "open"
+        ) {
           sendChannelRefs.current[socketId].send(data);
         }
       });

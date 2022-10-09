@@ -1,4 +1,5 @@
 import { useR3fObjectStore, useUserStore } from "@/store/rhetoric";
+import { R3fObjectBox, R3fObjectModel } from "@/types/r3fObject";
 import { WebRTCEvent, WebRTCEventUnion } from "@/types/webRTC";
 import { Vector3 } from "three";
 
@@ -106,13 +107,24 @@ function useOnUserR3fObjectFocus() {
 function useOnR3fObjectCreate() {
   const add = useR3fObjectStore((state) => state.add);
 
-  return ({ r3fObjectId }: WebRTCEvent["r3fObjectCreate"]) => {
+  return ({
+    r3fObjectId,
+    type,
+    groupString,
+  }: WebRTCEvent["r3fObjectCreate"]) => {
+    console.log("onmessage ! , ", { r3fObjectId, type, groupString });
     add({
-      r3fObject: {
-        id: r3fObjectId,
-        name: "box",
-        position: new Vector3(0, 0, 0),
-      },
+      r3fObject:
+        type === "box"
+          ? new R3fObjectBox({
+              id: r3fObjectId,
+              position: new Vector3(0, 0, 0),
+            })
+          : new R3fObjectModel({
+              id: r3fObjectId,
+              position: new Vector3(0, 0, 0),
+              group: JSON.parse(groupString),
+            }),
     });
   };
 }

@@ -53,6 +53,8 @@ export interface WebRTCEvent {
    */
   r3fObjectCreate: {
     r3fObjectId: R3fObjectId;
+    type: "box" | "model";
+    groupString?: string;
   };
   /**
    * @summary R3fObject 삭제
