@@ -1,12 +1,8 @@
+import { useAppStore } from "@/store/app";
 import io, { Socket as SocketType } from "socket.io-client";
 
-// https://tie-video-chat-app.herokuapp.com
 const url = "https://tie-video-chat-app.herokuapp.com";
-// const url = "http://localhost:5556";
 
-// web token 만들기
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imluc3VuZzk1NDZAZ21haWwuY29tIiwiaWF0IjoxNjY0Nzk0MjQ2LCJleHAiOjMzMjIyMzk0MjQ2fQ.E1nS31RLwhWIYnm95LbRG56s6Zk0rS-2VlvxqeqUvZ4";
 export default class Socket {
   static instance: null | SocketType = null;
 
@@ -20,7 +16,9 @@ export default class Socket {
   };
 
   static emit = async (event: string, data: any) => {
-    // await As
+    const { getState } = useAppStore;
+    const { token } = getState();
+
     this.instance?.emit(event, { ...data, token });
   };
 

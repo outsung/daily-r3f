@@ -8,6 +8,7 @@ export function useOnMessage() {
   const onUserLeave = useOnUserLeave();
   const onUserCameraMove = useOnUserCameraMove();
   const onUserMouseMove = useOnUserMouseMove();
+  const onUserR3fObjectFocus = useOnUserR3fObjectFocus();
   const onR3fObjectCreate = useOnR3fObjectCreate();
   const onR3fObjectDelete = useOnR3fObjectDelete();
   const onR3fObjectTransformPosition = useOnR3fObjectTransformPosition();
@@ -31,6 +32,9 @@ export function useOnMessage() {
           break;
         case "userMouseMove":
           onUserMouseMove(payload);
+          break;
+        case "userR3fObjectFocus":
+          onUserR3fObjectFocus(payload);
           break;
         case "r3fObjectCreate":
           onR3fObjectCreate(payload);
@@ -88,6 +92,14 @@ function useOnUserMouseMove() {
 
   return ({ userId, handPosition }: WebRTCEvent["userMouseMove"]) => {
     handMoveById({ userId, handPosition: new Vector3(...handPosition) });
+  };
+}
+
+function useOnUserR3fObjectFocus() {
+  const focusR3fObjectById = useUserStore((state) => state.focusR3fObjectById);
+
+  return ({ userId, r3fObjectId }: WebRTCEvent["userR3fObjectFocus"]) => {
+    focusR3fObjectById({ userId, r3fObjectId });
   };
 }
 

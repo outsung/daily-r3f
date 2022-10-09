@@ -57,7 +57,7 @@ export const useUserStore = create<UserStore>((set) => ({
         user.id === userId
           ? {
               ...user,
-              focusedR3fObjectIds: user.focusedR3fObjectIds.concat(r3fObjectId),
+              focusedR3fObjectIds: [r3fObjectId],
             }
           : user
       ),

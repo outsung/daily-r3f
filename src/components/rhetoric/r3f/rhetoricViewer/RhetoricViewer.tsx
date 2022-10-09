@@ -7,13 +7,9 @@ export function RhetoricViewer() {
 
   return (
     <>
-      {useMemo(
-        () =>
-          r3fObjectList.map((r3fObject) => (
-            <RhetoricViewerItem key={r3fObject.id} r3fObject={r3fObject} />
-          )),
-        [r3fObjectList.length]
-      )}
+      {r3fObjectList.map((r3fObject) => (
+        <RhetoricViewerItem key={r3fObject.id} r3fObject={r3fObject} />
+      ))}
     </>
   );
 }

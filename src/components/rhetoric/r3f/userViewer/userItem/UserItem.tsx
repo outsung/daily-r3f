@@ -6,7 +6,6 @@ import {
   UserItemBodyModelType,
 } from "./userBody";
 import { UserItemHand } from "./userHand";
-import { UserCameraShape } from "./UserCameraShape";
 
 interface UserItemProps {
   user: User;
@@ -18,7 +17,6 @@ export function UserItem({ user, index }: UserItemProps) {
   return (
     <>
       <group key={user.id} position={user.position}>
-        {/* <UserCameraShape color={color} /> */}
         <UserItemBody
           modelType={
             Object.keys(userItemBodyModels)[

@@ -8,7 +8,7 @@ const RTC_PEER_CONNECTION_CONFIG = {
   iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
 };
 
-export function useWebRtc(email = "테스트") {
+export function useWebRtc() {
   const peerRefs = useRef<{ [socketId: string]: RTCPeerConnection }>({});
   const sendChannelRefs = useRef<{ [socketId: string]: RTCDataChannel }>({});
 
@@ -128,7 +128,7 @@ export function useWebRtc(email = "테스트") {
           Socket.emit("offer", {
             sdp: localSdp,
             offerSendID: Socket.instance?.id,
-            offerSendEmail: email,
+            offerSendEmail: "test",
             offerReceiveID: user.id,
           });
         } catch (e) {

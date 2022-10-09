@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { RhetoricR3fRef } from "@/components/rhetoric/r3f";
 import {
@@ -9,6 +9,8 @@ import { RhetoricToolbar } from "@/components/rhetoric/dom/toolbar";
 import { useSocket } from "@/hooks/socket";
 import { useWebRtc } from "@/hooks/webrtc";
 import Socket from "@/core/socket";
+import { useAppStore } from "@/store/app";
+import { Login } from "@/components/rhetoric/dom/login";
 
 const RhetoricR3f = dynamic(() => import("@/components/rhetoric/r3f"), {
   ssr: false,
@@ -16,30 +18,31 @@ const RhetoricR3f = dynamic(() => import("@/components/rhetoric/r3f"), {
 
 function RhetoricDom({ ref }: { ref: RhetoricR3fRef }) {
   useSocket();
-  useWebRtc("");
+  useWebRtc();
+
+  useEffect(() => {
+    Socket.emit("joinRoom", { room: "testRoom", email: "" });
+  }, []);
 
   return (
     <>
       <RhetoricToolbar />
       <RhetoricSidebarLeft />
       <RhetoricSidebarRight />
-      <div className="absolute w-full flex justify-center">
-        <div
-          className="cursor-pointer"
-          style={{ backgroundColor: "#FFF" }}
-          onClick={() => {
-            Socket.emit("joinRoom", { room: "testRoom", email: "testEmail" });
-          }}
-        >
-          join room
-        </div>
-      </div>
     </>
   );
 }
 
 const RhetoricPage = () => {
   const r3fRef = useRef<RhetoricR3fRef>(null);
+  const token = useAppStore((state) => state.token);
+
+  if (!token)
+    return (
+      <>
+        <Login />
+      </>
+    );
 
   return (
     <>
