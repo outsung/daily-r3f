@@ -1,3 +1,4 @@
+import { r3fObjectModels } from "@/components/rhetoric/r3f/rhetoricViewer/RhetoricViewerItem";
 import { R3fObjectId } from "../r3fObject";
 import { UserId } from "../user";
 
@@ -54,7 +55,7 @@ export interface WebRTCEvent {
   r3fObjectCreate: {
     r3fObjectId: R3fObjectId;
     type: "box" | "model";
-    groupString?: string;
+    groupString?: keyof typeof r3fObjectModels;
   };
   /**
    * @summary R3fObject 삭제

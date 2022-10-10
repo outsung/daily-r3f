@@ -1,3 +1,4 @@
+import Socket from "@/core/socket";
 import { useMyUser } from "@/hooks/store/user";
 import { useR3fObjectStore, useUserStore } from "@/store/rhetoric";
 import { useSocketStore } from "@/store/socket";
@@ -40,6 +41,7 @@ export function TransformContainer({
       event.stopPropagation();
 
       if (!isOtherUserFocusedR3fObject) {
+        Socket.emit("r3fObjectFocus", { r3fObjectId: r3fObject.id });
         send({
           eventName: "userR3fObjectFocus",
           payload: { userId: mySocketId, r3fObjectId: r3fObject.id },

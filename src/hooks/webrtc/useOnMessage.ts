@@ -123,7 +123,7 @@ function useOnR3fObjectCreate() {
           : new R3fObjectModel({
               id: r3fObjectId,
               position: new Vector3(0, 0, 0),
-              group: JSON.parse(groupString),
+              group: groupString,
             }),
     });
   };

@@ -1,11 +1,10 @@
 import { useR3fObjectStore } from "@/store/rhetoric";
 import * as uuid from "uuid";
-import { Group, LoaderUtils, Vector3 } from "three";
+import { Vector3 } from "three";
 import { useWebRTCStore } from "@/store/webRTC";
 import { RhetoricToolbarItem } from "./RhetoricToolbarItem";
-import { useRef } from "react";
-import { useR3fObjectUpload } from "@/hooks/rhetoric/useR3fObjectUpload";
 import { R3fObjectBox, R3fObjectModel } from "@/types/r3fObject";
+import Socket from "@/core/socket";
 
 export function RhetoricToolbar() {
   const add = useR3fObjectStore((state) => state.add);
@@ -13,6 +12,7 @@ export function RhetoricToolbar() {
 
   const onAddBox = () => {
     const id = uuid.v4();
+    Socket.emit("r3fObjectCreate", { r3fObjectId: id, type: "box" });
     send({
       eventName: "r3fObjectCreate",
       payload: { r3fObjectId: id, type: "box" },
@@ -22,41 +22,32 @@ export function RhetoricToolbar() {
     });
   };
 
-  const onAddModel = (group: Group) => {
+  const onAddIceCream = () => {
     const id = uuid.v4();
-    console.log("send", send, JSON.stringify(group));
+    Socket.emit("r3fObjectCreate", {
+      r3fObjectId: id,
+      type: "model",
+      groupString: "IceCreamModel",
+    });
     send({
       eventName: "r3fObjectCreate",
-      payload: {
-        r3fObjectId: id,
-        type: "model",
-        groupString: JSON.stringify(group),
-      },
+      payload: { r3fObjectId: id, type: "model", groupString: "IceCreamModel" },
     });
     add({
       r3fObject: new R3fObjectModel({
         id,
-        group,
+        group: "IceCreamModel",
         position: new Vector3(0, 0, 0),
       }),
     });
   };
 
-  const { R3fObjectUploadInput, onClick } = useR3fObjectUpload(onAddModel);
-
   return (
     <div className="absolute flex w-full bottom-4 justify-center">
-      <R3fObjectUploadInput />
       <div className="flex flex-row">
         <RhetoricToolbarItem onClick={onAddBox} title="박스 생성" />
-        <RhetoricToolbarItem onClick={onClick} title="업로드" />
+        <RhetoricToolbarItem onClick={onAddIceCream} title="아이스크림 생성" />
       </div>
     </div>
   );
-}
-
-{
-  /* <group ref={ref} scale={0.005}>
-<primitive object={model} />
-</group> */
 }

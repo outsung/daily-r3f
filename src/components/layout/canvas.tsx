@@ -50,6 +50,8 @@ const LCanvas = ({ children }) => {
       }}
       onCreated={(state) => state.events.connect(dom.current)}
     >
+      <pointLight position={[10, 10, 10]} />
+      <pointLight position={[-10, -10, -10]} />
       <ambientLight />
 
       <LControl />
