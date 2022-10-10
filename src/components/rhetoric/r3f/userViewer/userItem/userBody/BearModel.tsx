@@ -17,7 +17,7 @@ export function BearModel(props: GroupProps) {
       <mesh
         geometry={nodes.character_bear.geometry}
         material={nodes.character_bear.material}
-        rotation={[Math.PI / 2, 0, 0]}
+        rotation={[Math.PI / 2, 0, Math.PI]}
       >
         <mesh
           geometry={nodes.character_bearArmLeft.geometry}

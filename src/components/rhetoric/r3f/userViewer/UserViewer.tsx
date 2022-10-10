@@ -5,7 +5,7 @@ import { UserItem } from "./userItem";
 
 export function UserViewer() {
   useMyUserMove();
-  // useMyUserHandMove();
+  useMyUserHandMove();
 
   const myUser = useMyUser();
   const userList = useUserStore((state) => state.userList);

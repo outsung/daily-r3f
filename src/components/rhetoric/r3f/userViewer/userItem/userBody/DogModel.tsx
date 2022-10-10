@@ -17,7 +17,7 @@ export function DogModel(props: GroupProps) {
       <mesh
         geometry={nodes.character_dog.geometry}
         material={nodes.character_dog.material}
-        rotation={[Math.PI / 2, 0, 0]}
+        rotation={[Math.PI / 2, 0, Math.PI]}
       >
         <mesh
           geometry={nodes.character_dogArmLeft.geometry}

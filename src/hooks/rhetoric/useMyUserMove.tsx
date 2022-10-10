@@ -3,7 +3,7 @@ import { controlRef } from "@/components/layout/canvas";
 import { useUserStore } from "@/store/rhetoric";
 import { useWebRTCStore } from "@/store/webRTC";
 import { useMyUser } from "../store/user";
-import { Vector3 } from "three";
+import { Euler, Vector3 } from "three";
 
 export function useMyUserMove() {
   const myUser = useMyUser();
@@ -16,6 +16,7 @@ export function useMyUserMove() {
       const { position, rotation } = event.target.object;
 
       moveById({
+        rotation: new Euler(rotation.x, rotation.y, rotation.z),
         position: new Vector3(position.x, position.y, position.z),
         userId: myUser.id,
       });
@@ -23,6 +24,7 @@ export function useMyUserMove() {
         eventName: "userCameraMove",
         payload: {
           position: [position.x, position.y, position.z],
+          rotation: [rotation.x, rotation.y, rotation.z],
           userId: myUser.id,
         },
       });

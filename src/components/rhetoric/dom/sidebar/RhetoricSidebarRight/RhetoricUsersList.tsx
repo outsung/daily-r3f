@@ -27,15 +27,15 @@ function RhetoricUsersListItem({ user }: { user: User }) {
   const color = stringToColor(user.id);
 
   return (
-    <div
-      className="rounded-full w-8 h-8 flex justify-center items-center m-1"
-      style={{ backgroundColor: color }}
-    >
-      <Tooltip placement="top" title={user.name}>
+    <Tooltip placement="top" title={user.name}>
+      <div
+        className="rounded-full w-8 h-8 flex justify-center items-center m-1"
+        style={{ backgroundColor: color }}
+      >
         <div className="font-bold" style={{ color: "#ffffff" }}>
           {user.name[0].toUpperCase()}
         </div>
-      </Tooltip>
-    </div>
+      </div>
+    </Tooltip>
   );
 }

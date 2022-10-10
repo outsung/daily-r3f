@@ -1,6 +1,6 @@
 import { R3fObjectId } from "@/types/r3fObject";
 import { User, UserId } from "@/types/user";
-import { Vector3 } from "three";
+import { Euler, Vector3 } from "three";
 import create from "zustand";
 
 interface UserStore {
@@ -11,7 +11,11 @@ interface UserStore {
   add: (payload: { user: User }) => void;
   deleteById: (payload: { userId: UserId }) => void;
 
-  moveById: (payload: { userId: UserId; position: Vector3 }) => void;
+  moveById: (payload: {
+    userId: UserId;
+    position: Vector3;
+    rotation: Euler;
+  }) => void;
   handMoveById: (payload: { userId: UserId; handPosition: Vector3 }) => void;
 
   focusR3fObjectById: (payload: {
@@ -39,10 +43,10 @@ export const useUserStore = create<UserStore>((set) => ({
     set((prev) => ({
       userList: prev.userList.filter((user) => user.id !== userId),
     })),
-  moveById: ({ userId, position }) =>
+  moveById: ({ userId, position, rotation }) =>
     set((prev) => ({
       userList: prev.userList.map((user) =>
-        user.id === userId ? { ...user, position } : user
+        user.id === userId ? { ...user, position, rotation } : user
       ),
     })),
   handMoveById: ({ userId, handPosition }) =>

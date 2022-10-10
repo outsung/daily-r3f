@@ -28,7 +28,7 @@ export function Login() {
     <div className="flex flex-col justify-center items-center h-full">
       <div>로그인해주세요</div>
       <div className="w-72">
-        <Input
+        {/* <Input
           placeholder="name"
           style={{ margin: "12px 0px" }}
           onChange={(e) => setName(e.target.value)}
@@ -46,23 +46,39 @@ export function Login() {
         >
           로그인
         </Button>
+         */}
+
         <Button
           type="primary"
           block
           style={{ margin: "12px 0px" }}
-          onClick={() =>
-            login({ name: "insung9546@gmail.com", code: "123456" })
-          }
+          onClick={() => login({ name: "Witch", code: "123456" })}
         >
-          테스트 1
+          test 1
         </Button>
         <Button
           type="primary"
           block
           style={{ margin: "12px 0px" }}
-          onClick={() => login({ name: "test@gmail.com", code: "123456" })}
+          onClick={() => login({ name: "Bear", code: "123456" })}
         >
-          테스트 2
+          test 2
+        </Button>
+        <Button
+          type="primary"
+          block
+          style={{ margin: "12px 0px" }}
+          onClick={() => login({ name: "Duck", code: "123456" })}
+        >
+          test 3
+        </Button>
+        <Button
+          type="primary"
+          block
+          style={{ margin: "12px 0px" }}
+          onClick={() => login({ name: "Dog", code: "123456" })}
+        >
+          test 4
         </Button>
       </div>
     </div>

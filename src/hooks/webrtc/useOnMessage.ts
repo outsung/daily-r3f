@@ -1,7 +1,7 @@
 import { useR3fObjectStore, useUserStore } from "@/store/rhetoric";
 import { R3fObjectBox, R3fObjectModel } from "@/types/r3fObject";
 import { WebRTCEvent, WebRTCEventUnion } from "@/types/webRTC";
-import { Vector3 } from "three";
+import { Euler, Vector3 } from "three";
 
 // data -> json.parse -> check 이후 호출 될 webRTC 리스너
 export function useOnMessage() {
@@ -64,8 +64,9 @@ function useOnUserEnter() {
       user: {
         id: userId,
         name,
-        position: new Vector3(0, 0, 0),
-        handPosition: new Vector3(0, 0, 0),
+        rotation: new Euler(0, 0, 0),
+        position: new Vector3(0, 0, 5),
+        handPosition: new Vector3(0.3, 0.1, 4),
         focusedR3fObjectIds: [],
       },
     });
@@ -83,8 +84,12 @@ function useOnUserLeave() {
 function useOnUserCameraMove() {
   const moveById = useUserStore((state) => state.moveById);
 
-  return ({ userId, position }: WebRTCEvent["userCameraMove"]) => {
-    moveById({ userId, position: new Vector3(...position) });
+  return ({ userId, position, rotation }: WebRTCEvent["userCameraMove"]) => {
+    moveById({
+      userId,
+      position: new Vector3(...position),
+      rotation: new Euler(...rotation),
+    });
   };
 }
 

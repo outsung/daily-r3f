@@ -10,6 +10,7 @@ export interface WebRTCEvent {
   userCameraMove: {
     userId: UserId;
     position: [number, number, number];
+    rotation: [number, number, number];
   };
   /**
    * @summary 유저 마우스 이동

@@ -17,7 +17,7 @@ export function DuckModel(props: GroupProps) {
       <mesh
         geometry={nodes.character_duck.geometry}
         material={nodes.character_duck.material}
-        rotation={[Math.PI / 2, 0, 0]}
+        rotation={[Math.PI / 2, 0, Math.PI]}
       >
         <mesh
           geometry={nodes.character_duckArmLeft.geometry}

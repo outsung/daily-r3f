@@ -2,7 +2,7 @@ import Socket from "@/core/socket";
 import { useUserStore } from "@/store/rhetoric";
 import { useSocketStore } from "@/store/socket";
 import { useEffect } from "react";
-import { Vector3 } from "three";
+import { Euler, Vector3 } from "three";
 
 export function useSocket() {
   const setMySocketId = useSocketStore((state) => state.setMySocketId);
@@ -21,8 +21,9 @@ export function useSocket() {
         user: {
           id: Socket.instance.id,
           name: "나",
-          position: new Vector3(0, 0, 0),
-          handPosition: new Vector3(0, 0, 0),
+          rotation: new Euler(0, 0, 0),
+          position: new Vector3(0, 0, 5),
+          handPosition: new Vector3(0.3, 0.1, 4),
           focusedR3fObjectIds: [],
         },
       });

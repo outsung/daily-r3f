@@ -6,26 +6,26 @@ import {
   UserItemBodyModelType,
 } from "./userBody";
 import { UserItemHand } from "./userHand";
+import {
+  getUserInfoByName,
+  PredefinedUserName,
+} from "@/helpers/rhetoric/getUserInfoByName";
 
 interface UserItemProps {
   user: User;
   index: number;
 }
 export function UserItem({ user, index }: UserItemProps) {
-  const color = stringToColor(user.id);
+  const { bodyModel, handModel } = getUserInfoByName(
+    user.name as PredefinedUserName
+  );
 
   return (
     <>
-      <group key={user.id} position={user.position}>
-        <UserItemBody
-          modelType={
-            Object.keys(userItemBodyModels)[
-              index % Object.keys(userItemBodyModels).length
-            ] as UserItemBodyModelType
-          }
-        />
+      <group key={user.id} position={user.position} rotation={user.rotation}>
+        <UserItemBody modelType={bodyModel} />
       </group>
-      <UserItemHand modelType="SwordModel" position={user.handPosition} />
+      <UserItemHand modelType={handModel} position={user.handPosition} />
     </>
   );
 }

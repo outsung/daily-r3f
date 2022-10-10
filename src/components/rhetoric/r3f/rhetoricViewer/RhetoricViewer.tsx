@@ -1,5 +1,4 @@
 import { RhetoricViewerItem } from "./RhetoricViewerItem";
-import { useMemo } from "react";
 import { useR3fObjectStore } from "@/store/rhetoric";
 
 export function RhetoricViewer() {
