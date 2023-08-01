@@ -1,7 +1,7 @@
 import { useAppStore } from "@/store/app";
 import io, { Socket as SocketType } from "socket.io-client";
 
-const url = "https://tie-video-chat-app.herokuapp.com";
+const url = "https://port-0-tie-video-chat-server-eu1k2llkrslzb2.sel4.cloudtype.app";
 
 export default class Socket {
   static instance: null | SocketType = null;

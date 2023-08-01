@@ -2,7 +2,7 @@ import { useAppStore } from "@/store/app";
 import { Button, Input, notification } from "antd";
 import { useState } from "react";
 
-const url = "https://tie-video-chat-app.herokuapp.com";
+const url = "https://port-0-tie-video-chat-server-eu1k2llkrslzb2.sel4.cloudtype.app";
 
 export function Login() {
   const setToken = useAppStore((state) => state.setToken);
