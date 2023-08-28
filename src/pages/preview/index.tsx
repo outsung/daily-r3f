@@ -11,6 +11,9 @@ const Box = dynamic(() => import("@/components/canvas/box/shader/Shader"), {
 export const DOM = ({ previewablePaths }: PageProps) => {
   const { query } = useRouter();
   const focusFilePath = query?.name;
+  const isHideUi = query?.ui === "false";
+
+  if (isHideUi) return null;
 
   return (
     <div>
