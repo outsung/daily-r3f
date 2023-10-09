@@ -1,0 +1,17 @@
+# File exported by Houdini 19.5.640 (www.sidefx.com)
+# 7 points
+# 12 vertices
+# 3 primitives
+# Bounds: [-8, 0, -8] to [8, 16, 8]
+g 
+v 8 0 8
+v -8 0 8
+v 8 16 8
+v -8 16 8
+v -8 0 -8
+v 8 0 -8
+v -8 16 -8
+g 
+f 1 2 4 3
+f 6 5 2 1
+f 2 5 7 4
