@@ -10,7 +10,7 @@ export function CornModel(props: GroupProps) {
   const group = useRef();
   // @ts-ignore
   const { nodes, materials } = useGLTF(
-    "https://market-assets.fra1.cdn.digitaloceanspaces.com/market-assets/models/corn/model.gltf"
+    "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/corn/model.gltf"
   );
   return (
     <group ref={group} {...props} dispose={null}>
@@ -21,5 +21,5 @@ export function CornModel(props: GroupProps) {
 }
 
 useGLTF.preload(
-  "https://market-assets.fra1.cdn.digitaloceanspaces.com/market-assets/models/corn/model.gltf"
+  "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/corn/model.gltf"
 );

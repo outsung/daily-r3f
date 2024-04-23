@@ -10,7 +10,7 @@ export function HoneyModel(props: GroupProps) {
   const group = useRef();
   // @ts-ignore
   const { nodes, materials } = useGLTF(
-    "https://market-assets.fra1.cdn.digitaloceanspaces.com/market-assets/models/honey/model.gltf"
+    "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/honey/model.gltf"
   );
   return (
     <group ref={group} {...props} dispose={null}>
@@ -31,5 +31,5 @@ export function HoneyModel(props: GroupProps) {
 }
 
 useGLTF.preload(
-  "https://market-assets.fra1.cdn.digitaloceanspaces.com/market-assets/models/honey/model.gltf"
+  "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/honey/model.gltf"
 );

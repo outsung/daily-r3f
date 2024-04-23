@@ -10,7 +10,7 @@ export function WholerHamModel(props: GroupProps) {
   const group = useRef();
   // @ts-ignore
   const { nodes, materials } = useGLTF(
-    "https://market-assets.fra1.cdn.digitaloceanspaces.com/market-assets/models/wholer-ham/model.gltf"
+    "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/wholer-ham/model.gltf"
   );
   return (
     <group ref={group} {...props} dispose={null}>
@@ -29,5 +29,5 @@ export function WholerHamModel(props: GroupProps) {
 }
 
 useGLTF.preload(
-  "https://market-assets.fra1.cdn.digitaloceanspaces.com/market-assets/models/wholer-ham/model.gltf"
+  "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/wholer-ham/model.gltf"
 );
