@@ -33,16 +33,18 @@ const RhetoricR3f = forwardRef<RhetoricR3fRef, RhetoricR3fProps>(
                 color="black"
               />
 
-              {Socket.instance?.id && (
-                <Outline
-                  // https://github.com/pmndrs/react-postprocessing/issues/142
-                  blendFunction={BlendFunction.ADD}
-                  visibleEdgeColor={stringToHex(Socket.instance.id)}
-                  hiddenEdgeColor={stringToHex(Socket.instance.id)}
-                  blur
-                  edgeStrength={100}
-                />
-              )}
+              {/* {Socket.instance?.id && ( */}
+              <Outline
+                // https://github.com/pmndrs/react-postprocessing/issues/142
+                blendFunction={BlendFunction.ADD}
+                // visibleEdgeColor={stringToHex(Socket.instance.id)}
+                // hiddenEdgeColor={stringToHex(Socket.instance.id)}
+                visibleEdgeColor={0xffffff}
+                hiddenEdgeColor={0xffffff}
+                blur
+                edgeStrength={100}
+              />
+              {/* )} */}
 
               {/* <SMAA /> */}
             </EffectComposer>
