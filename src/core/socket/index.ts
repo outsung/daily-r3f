@@ -1,7 +1,7 @@
 import { useAppStore } from "@/store/app";
 import io, { Socket as SocketType } from "socket.io-client";
 
-const url = "https://port-0-tie-video-chat-server-eu1k2llkrslzb2.sel4.cloudtype.app";
+const url = "https://expressjs-on-koyeb-outsung.koyeb.app";
 
 export default class Socket {
   static instance: null | SocketType = null;
